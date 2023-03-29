@@ -1,23 +1,24 @@
-import logo from './logo.svg';
-import './App.css';
-
+import logo from "./logo.svg";
+import "./App.css";
+import axios from "axios";
 function App() {
+  const [color, setColor] = useState("ffffff");
+  function handleColorChange(color) {
+    setColor(color);
+    axios.put(
+      `http://192.168.0.100/api/7KwyaQsT91WJE7aXrXwCzFf7D-PYItXQ4Zk5Merw/lights/EE0BA2/state`,
+      {
+        on: true,
+        sat: 254,
+        bri: 150,
+        hue: parseInt(color, 16),
+      }
+    );
+  }
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <button onClick={() => handleColorChange("ff0000")}>Red</button>
+      <button onClick={() => handleColorChange("00ff00")}>Green</button>
     </div>
   );
 }
