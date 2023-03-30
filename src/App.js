@@ -2,7 +2,82 @@ import axios from "axios";
 import { useState } from "react";
 
 function App() {
-  const [color, setColor] = useState();
+  var i = 0;
+  const trailerPirates = [
+    { h: 240, s: 1.0, b: 0.2 },
+    { h: 120, s: 1.0, b: 0.2 },
+    { h: 30, s: 1.0, b: 1.0 },
+    { h: 0, s: 1.0, b: 1.0 },
+    { h: 60, s: 1.0, b: 1.0 },
+    { h: 300, s: 1.0, b: 0.2 },
+    { h: 180, s: 1.0, b: 0.2 },
+    { h: 330, s: 1.0, b: 1.0 },
+    { h: 210, s: 1.0, b: 0.8 },
+    { h: 30, s: 1.0, b: 1.0 },
+    { h: 120, s: 1.0, b: 0.2 },
+    { h: 60, s: 1.0, b: 1.0 },
+    { h: 0, s: 1.0, b: 1.0 },
+    { h: 300, s: 1.0, b: 0.2 },
+    { h: 330, s: 1.0, b: 1.0 },
+    { h: 210, s: 1.0, b: 0.8 },
+    { h: 240, s: 1.0, b: 0.33 }, // Dark blue
+    { h: 120, s: 1.0, b: 0.33 }, // Green
+    { h: 60, s: 1.0, b: 1.0 }, // Yellow
+    { h: 300, s: 1.0, b: 0.5 }, // Purple
+    { h: 180, s: 1.0, b: 0.5 }, // Teal
+    { h: 330, s: 1.0, b: 1.0 }, // Pink
+    { h: 0, s: 1.0, b: 1.0 }, // Red
+    { h: 210, s: 1.0, b: 0.67 }, // Light blue
+    { h: 120, s: 1.0, b: 0.33 }, // Green
+    { h: 30, s: 1.0, b: 1.0 }, // Orange
+    { h: 60, s: 1.0, b: 1.0 }, // Yellow
+    { h: 240, s: 1.0, b: 0.33 }, // Dark blue
+    { h: 0, s: 1.0, b: 1.0 }, // Red
+    { h: 330, s: 1.0, b: 1.0 }, // Pink
+    { h: 210, s: 1.0, b: 0.67 }, // Light blue
+    { h: 300, s: 1.0, b: 0.5 }, // Purple
+    { h: 120, s: 1.0, b: 0.33 }, // Green
+    { h: 30, s: 1.0, b: 1.0 }, // Orange
+    { h: 60, s: 1.0, b: 1.0 }, // Yellow
+    { h: 0, s: 1.0, b: 1.0 }, // Red
+    { h: 330, s: 1.0, b: 1.0 }, // Pink
+    { h: 210, s: 1.0, b: 0.67 }, // Light blue
+    { h: 120, s: 1.0, b: 0.33 }, // Green
+    { h: 60, s: 1.0, b: 1.0 }, // Yellow
+    { h: 300, s: 1.0, b: 0.5 }, // Purple
+    { h: 0, s: 1.0, b: 1.0 }, // Red
+    { h: 330, s: 1.0, b: 1.0 }, // Pink
+    { h: 240, s: 1.0, b: 0.33 }, // Dark blue
+    { h: 210, s: 1.0, b: 0.67 }, // Light blue
+    { h: 120, s: 100, b: 50 },
+    { h: 60, s: 100, b: 50 },
+    { h: 330, s: 100, b: 50 },
+    { h: 210, s: 100, b: 50 },
+    { h: 300, s: 100, b: 50 },
+    { h: 30, s: 100, b: 50 },
+    { h: 0, s: 100, b: 50 },
+    { h: 120, s: 100, b: 50 },
+    { h: 60, s: 100, b: 50 },
+    { h: 330, s: 100, b: 50 },
+    { h: 240, s: 100, b: 50 },
+    { h: 210, s: 100, b: 50 },
+    { h: 300, s: 100, b: 50 },
+    { h: 120, s: 100, b: 50 },
+    { h: 30, s: 100, b: 50 },
+    { h: 60, s: 100, b: 50 },
+    { h: 0, s: 100, b: 50 },
+    { h: 330, s: 100, b: 50 },
+    { h: 240, s: 100, b: 50 },
+    { h: 210, s: 100, b: 50 },
+    { h: 120, s: 100, b: 50 },
+    { h: 300, s: 100, b: 50 },
+    { h: 60, s: 100, b: 50 },
+    { h: 30, s: 100, b: 50 },
+    { h: 0, s: 100, b: 50 },
+    { h: 330, s: 100, b: 50 },
+    { h: 210, s: 100, b: 50 },
+    { h: 240, s: 100, b: 50 },
+  ];
 
   function hexToHsl(hex) {
     // Convert hex to RGB first
@@ -21,7 +96,7 @@ function App() {
       s,
       l = (max + min) / 2;
 
-    if (max == min) {
+    if (max === min) {
       h = s = 0; // achromatic
     } else {
       var d = max - min;
@@ -51,50 +126,71 @@ function App() {
     return colors;
   }
 
-  function handleColorChange(color2) {
-    const colorCode = hexToHsl(color2);
-    const h = colorCode[0] * 182;
-    const s = 256 * (colorCode[1] / 100);
-    const l = 256 * (colorCode[2] / 100);
+  function changeColors(i) {
+    const h = trailerPirates[i].h * 182;
+    const s = trailerPirates[i].s * 255;
+    const b = trailerPirates[i].b * 255;
 
-    console.log(colorCode[0]);
-    console.log(colorCode[1]);
-    console.log(colorCode[2]);
+    const intH = parseInt(h, 10);
+    const intS = parseInt(s, 10);
+    const intB = parseInt(b, 10);
 
-    console.log(h);
-    console.log(s);
-    console.log(l);
+    console.log(intH);
+    console.log(intS);
+    console.log(intB);
 
-    const intH = Math.trunc(h);
-    const intS = Math.trunc(s);
-    const intL = Math.trunc(l);
-
-    setColor(colorCode);
     try {
       axios
         .put(
           `http://192.168.0.100/api/7KwyaQsT91WJE7aXrXwCzFf7D-PYItXQ4Zk5Merw/lights/1/state`,
           {
             on: true,
-            sat: 255,
-            bri: 255,
-            hue: 43680,
+            sat: s,
+            bri: b,
+            hue: h,
           }
         )
         .then((result) => console.log(result));
     } catch (error) {
       console.log(error);
     }
-    console.log(intH);
-    console.log(intS);
-    console.log(intL);
+
+    try {
+      axios
+        .put(
+          `http://192.168.0.100/api/7KwyaQsT91WJE7aXrXwCzFf7D-PYItXQ4Zk5Merw/lights/4/state`,
+          {
+            on: true,
+            sat: s,
+            bri: b,
+            hue: h,
+          }
+        )
+        .then((result) => console.log(result));
+    } catch (error) {
+      console.log(error);
+    }
   }
+
+  function playColors() {
+    if (i < 1) {
+      changeColors(i);
+      i++;
+    }
+
+    setTimeout(function () {
+      console.log(i);
+      changeColors(i);
+      i++;
+      if (i < trailerPirates.length) {
+        playColors();
+      }
+    }, 2000);
+  }
+
   return (
     <div className="App">
-      <button onClick={() => handleColorChange("ff0000")}>Red</button>
-      <button onClick={() => handleColorChange("00ff00")}>Green</button>
-      <button onClick={() => handleColorChange("0000ff")}>Blue</button>
-      <div>{color}</div>
+      <button onClick={() => playColors()}>Play</button>
     </div>
   );
 }
