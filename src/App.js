@@ -1,11 +1,23 @@
 import axios from "axios";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import ReactPlayer from "react-player";
 
 function App() {
+  const videoRefBrothers = useRef(null);
+  const videoRefABeautifulMind = useRef(null);
+  const videoRefIngloriousBasterds = useRef(null);
+
+  const [videoData, setVideoData] = useState([]);
   var i = 0;
 
   const brothersSceneHSB = [
+    {
+      startTime: "00:00,000",
+      endTime: "00:10,000",
+      hue: 240,
+      sat: 100,
+      bri: 10,
+    },
     {
       startTime: "00:10,000",
       endTime: "00:17,800",
@@ -676,10 +688,17 @@ function App() {
     },
     {
       startTime: "02:38,340",
-      endTime: "02:48,340",
+      endTime: "02:47,340",
       hue: 50,
       sat: 100,
       bri: 80,
+    },
+    {
+      startTime: "02:47,340",
+      endTime: "02:48,340",
+      hue: 50,
+      sat: 100,
+      bri: 0,
     },
   ];
 
@@ -756,10 +775,17 @@ function App() {
     { startTime: "05:12,760", endTime: "05:14,760", hue: 0, sat: 100, bri: 70 },
     {
       startTime: "05:14,760",
-      endTime: "05:32,760",
+      endTime: "05:31,760",
       hue: 0,
       sat: 100,
       bri: 100,
+    },
+    {
+      startTime: "05:31,760",
+      endTime: "05:32,760",
+      hue: 0,
+      sat: 100,
+      bri: 0,
     },
   ];
 
@@ -769,18 +795,18 @@ function App() {
     ingloriousBastardsHSB,
   ];
 
-  function changeColors(i, sceneInt) {
-    const h = scenesHSB[sceneInt][i].hue * 182;
-    const s = scenesHSB[sceneInt][i].sat * 2.55;
-    const b = scenesHSB[sceneInt][i].bri * 2.55;
+  function changeColors(data, sceneInt) {
+    const h = data.hue * 182;
+    const s = data.sat * 2.55;
+    const b = data.bri * 2.55;
 
     const intH = parseInt(h, 10);
     const intS = parseInt(s, 10);
     const intB = parseInt(b, 10);
 
-    console.log(intH);
-    console.log(intS);
-    console.log(intB);
+    //console.log(intH);
+    //console.log(intS);
+    //console.log(intB);
 
     try {
       axios
@@ -822,30 +848,154 @@ function App() {
     }
 
     setTimeout(function () {
-      console.log(i);
+      //console.log(i);
       changeColors(i, sceneInt);
       i++;
       if (i < scenesHSB[sceneInt].length) {
         playColors(sceneInt);
       } else {
-        console.log(i);
+        //console.log(i);
         i = 0;
       }
     }, 2000);
   }
+
+  function formatTime(timeInSeconds) {
+    const minutes = Math.floor(timeInSeconds / 60)
+      .toString()
+      .padStart(2, "0");
+    const seconds = (timeInSeconds % 60)
+      .toFixed(3)
+      .replace(".", ",")
+      .padStart(6, "0");
+    return `${minutes}:${seconds}`;
+  }
+
+  const checkVideoTimeBrothers = () => {
+    const videoElement = videoRefBrothers.current;
+    const currentTime = videoElement.currentTime;
+
+    const formattedCurrentTime = formatTime(currentTime);
+    const dateCurrentTime = new Date(
+      `2000-01-01T00:${formattedCurrentTime.replace(",", ".")}`
+    );
+
+    //console.log(dateCurrentTime);
+
+    scenesHSB[0].forEach((data) => {
+      // Update the video hue, saturation, brightness based on the matching data
+
+      // for (var i = 0; i < scenesHSB[0].length; i++) {
+      //console.log(data[i].startTime);
+      const date1 = new Date(
+        `2000-01-01T00:${data.startTime.replace(",", ".")}`
+      );
+      const date2 = new Date(`2000-01-01T00:${data.endTime.replace(",", ".")}`);
+
+      if (dateCurrentTime >= date1 && dateCurrentTime <= date2) {
+        changeColors(data, 0);
+        //console.log(dateCurrentTime);
+      }
+      // }
+    });
+  };
+
+  const checkVideoTimeABeautifulMind = () => {
+    const videoElement = videoRefABeautifulMind.current;
+    const currentTime = videoElement.currentTime;
+
+    const formattedCurrentTime = formatTime(currentTime);
+
+    const dateCurrentTime = new Date(
+      `2000-01-01T00:${formattedCurrentTime.replace(",", ".")}`
+    );
+
+    //console.log(dateCurrentTime);
+
+    scenesHSB[1].forEach((data) => {
+      // Update the video hue, saturation, brightness based on the matching data
+
+      console.log(data.startTime);
+
+      // for (var i = 0; i < scenesHSB[1].length; i++) {
+      //console.log(data[i].startTime);
+      const date1 = new Date(
+        `2000-01-01T00:${data.startTime.replace(",", ".")}`
+      );
+      const date2 = new Date(`2000-01-01T00:${data.endTime.replace(",", ".")}`);
+
+      if (dateCurrentTime >= date1 && dateCurrentTime <= date2) {
+        changeColors(data, 1);
+        //console.log(dateCurrentTime);
+      }
+      // }
+    });
+  };
+
+  const checkVideoTimeIngloriousBasterds = () => {
+    const videoElement = videoRefIngloriousBasterds.current;
+    const currentTime = videoElement.currentTime;
+
+    const formattedCurrentTime = formatTime(currentTime);
+
+    const dateCurrentTime = new Date(
+      `2000-01-01T00:${formattedCurrentTime.replace(",", ".")}`
+    );
+
+    //console.log(dateCurrentTime);
+
+    scenesHSB[2].forEach((data) => {
+      // Update the video hue, saturation, brightness based on the matching data
+
+      console.log(data.startTime);
+
+      // for (var i = 0; i < scenesHSB[1].length; i++) {
+      //console.log(data[i].startTime);
+      const date1 = new Date(
+        `2000-01-01T00:${data.startTime.replace(",", ".")}`
+      );
+      const date2 = new Date(`2000-01-01T00:${data.endTime.replace(",", ".")}`);
+
+      if (dateCurrentTime >= date1 && dateCurrentTime <= date2) {
+        changeColors(data, 1);
+        //console.log(dateCurrentTime);
+      }
+      // }
+    });
+  };
 
   return (
     <div className="App">
       <button onClick={() => playColors(0)}>Play Brothers 2009</button>
       <button onClick={() => playColors(1)}>Play A Beautiful Mind</button>
       <button onClick={() => playColors(2)}>Play Inglorious Bastards</button>
-      <ReactPlayer
+      <video
         className="react-player fixed-bottom"
-        url="videos/brothers.MP4"
+        src="videos/abeautifulmind.MP4"
+        ref={videoRefABeautifulMind}
+        onTimeUpdate={() => checkVideoTimeABeautifulMind()}
         width="80%"
         height="80%"
         controls={true}
-      />
+      ></video>
+      <video
+        className="react-player fixed-bottom"
+        src="videos/brothers.MP4"
+        ref={videoRefBrothers}
+        onTimeUpdate={() => checkVideoTimeBrothers()}
+        width="80%"
+        height="80%"
+        controls={true}
+      ></video>
+      <video
+        className="react-player fixed-bottom"
+        src="videos/ingloriousbasterds.MP4"
+        ref={videoRefIngloriousBasterds}
+        onTimeUpdate={() => checkVideoTimeIngloriousBasterds()}
+        width="80%"
+        height="80%"
+        controls={true}
+      ></video>
     </div>
   );
 }
