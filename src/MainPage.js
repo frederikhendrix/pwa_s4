@@ -21,6 +21,18 @@ function MainPage() {
   ];
   const [selectedValue, setSelectedValue] = useState(""); // set initial selected value to empty string
 
+  const imagesUrl = [
+    "/images/brothersimage.jpg",
+    "/images/abeautifulmindimage.jpg",
+    "/images/ingloriousbasterdsimage.jpg",
+  ];
+
+  const gradientUrl = [
+    "/images/brotherGradient.jpg",
+    "/images/brotherGradient.jpg",
+    "/images/brotherGradient.jpg",
+  ];
+
   const handleSelect = (e) => {
     setSelectedValue(e.target.value);
   };
@@ -48,15 +60,34 @@ function MainPage() {
               </option>
             ))}
           </select>
-          <button onClick={handleOnClick}>Search</button>
+          <button className="buttonSearch" onClick={handleOnClick}>
+            Search
+          </button>
         </div>
       </div>
       <div className="videoFeedBackWrap">
-        this is the video feedback component
+        <div className="posterFilmWrap">
+          <img
+            className="posterFilm"
+            src={imagesUrl[videoInteger]}
+            alt="Movie Image"
+          ></img>
+        </div>
+        <div className="gradientFilmWrap">
+          <img
+            className="gradientFilm"
+            src={gradientUrl[videoInteger]}
+            alt="Gradient Movie Image"
+          ></img>
+        </div>
       </div>
       <div className="bottomButtonsWrap">
-        <button>
+        <button className="streamMovieButton">
           <a href={`/video/${videoInteger}`}>Stream Movie</a>
+        </button>
+
+        <button className="refreshMovieButton" onClick={handleOnClick}>
+          Refresh Movie
         </button>
       </div>
     </div>

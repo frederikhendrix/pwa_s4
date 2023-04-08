@@ -1,16 +1,17 @@
 import axios from "axios";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import {
   ingloriousBastardsHSB,
   brothersSceneHSB,
   aBeautifulMindSceneHSB,
 } from "./javascriptScenes.js";
 import { useParams } from "react-router";
+import "./VideoPage.css";
 
 function VideoPage() {
   const videoRef = useRef(null);
   const { id } = useParams();
-
+  const [videoIntensity, setVideoIntensity] = useState(0);
   console.log(id);
 
   const videoUrl = [
@@ -35,6 +36,8 @@ function VideoPage() {
     const intH = parseInt(h, 10);
     const intS = parseInt(s, 10);
     const intB = parseInt(b, 10);
+
+    setVideoIntensity(data.bri);
 
     //console.log(intH);
     //console.log(intS);
@@ -114,16 +117,29 @@ function VideoPage() {
   };
 
   return (
-    <div className="App">
-      <video
-        className="react-player fixed-bottom"
-        src={videoUrl[id]}
-        ref={videoRef}
-        onTimeUpdate={() => checkVideoTime(id)}
-        width="80%"
-        height="80%"
-        controls={true}
-      ></video>
+    <div className="VideoPageWrap">
+      <div className="backButtonNavbarSectionWrap">
+        <div className="backButtonWrap">
+          <button className="backButton">
+            <a href="/">Back</a>
+          </button>
+        </div>
+      </div>
+
+      <div className="VideoSectionWrap">
+        <div className="videoPlayerWrap">
+          <video
+            className="react-player fixed bottom"
+            src={videoUrl[id]}
+            ref={videoRef}
+            onTimeUpdate={() => checkVideoTime(id)}
+            width="80%"
+            height="80%"
+            controls={true}
+          ></video>
+        </div>
+        <div className="videoIntensity">Video Intensity = {videoIntensity}</div>
+      </div>
     </div>
   );
 }
