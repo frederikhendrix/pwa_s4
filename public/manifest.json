@@ -3,9 +3,9 @@
     "name": "My Series PWA",
         "icons": [
             {
-                "src": "/images/logoWeather.png",
-                "type": "image/png",
-                "sizes": "1024x1024"
+                "src": "/images/logoHueFlix.jpg",
+                "type": "image/jpg",
+                "sizes": "834x834"
             }
         ],
     "start_url": ".",
