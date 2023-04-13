@@ -3,8 +3,8 @@
     "name": "My Series PWA",
         "icons": [
             {
-                "src": "/images/logoHueFlix.jpg",
-                "type": "image/jpg",
+                "src": "/images/logoHueFlix.png",
+                "type": "image/png",
                 "sizes": "834x834"
             }
         ],

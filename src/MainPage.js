@@ -28,9 +28,9 @@ function MainPage() {
   ];
 
   const gradientUrl = [
+    "/images/gradientBar2.jpg",
     "/images/brotherGradient.jpg",
-    "/images/brotherGradient.jpg",
-    "/images/brotherGradient.jpg",
+    "/images/gradientBarGlorious.png",
   ];
 
   const handleSelect = (e) => {
